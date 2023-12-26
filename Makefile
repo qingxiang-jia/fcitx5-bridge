@@ -1,4 +1,4 @@
-.PHONY: build install
+.PHONY: build install uninstall-usr
 
 init-debug:
 	mkdir -p build
@@ -20,6 +20,11 @@ build:
 
 install:
 	sudo cmake --install ./build
+
+uninstall-usr:
+	sudo rm /usr/lib/fcitx5/libims.so
+	sudo rm /usr/share/fcitx5/addon/ims.conf
+	sudo rm /usr/share/fcitx5/inputmethod/ims.conf
 
 proto:
 	protoc --cpp_out=. msgs.proto

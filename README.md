@@ -4,7 +4,7 @@ Fcitx5 is the de-facto input method platform for Linux. It's written in C++ and 
 
 ## How to use?
 
-fcitx-bridge is implemented as a place-holder input method engine, that takes key events from Fcitx5 and [publishes](https://zeromq.org/socket-api/#publish-subscribe-pattern) the events encoded using Protobuffer. Your input method engine listens to these events and computes the candidate words and send it to fcitx-bridge. The proto [file](https://github.com/qingxiang-jia/fcitx5-bridge/blob/main/msgs.proto) shows what's API calls are supported.
+fcitx-bridge is implemented as a place-holder input method engine, that takes key events from Fcitx5 and [send](https://zeromq.org/socket-api/#request-reply-pattern) the events encoded using Protobuffer. Your input method engine listens to these events and computes the candidate words and send it to fcitx-bridge. The proto [file](https://github.com/qingxiang-jia/fcitx5-bridge/blob/main/msgs.proto) shows what's API calls are supported.
 
 ```mermaid
 flowchart TD

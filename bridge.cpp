@@ -45,7 +45,7 @@ Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
 
   ctx = new zmq::context_t();
   sock = new zmq::socket_t(*ctx, ZMQ_REQ);
-  sock->bind("tcp://127.0.0.1:8085");
+  sock->connect("tcp://127.0.0.1:8085");
 
   fcitx::EventDispatcher *dispatcher = new fcitx::EventDispatcher();
   this->dispatcher = dispatcher;
@@ -90,7 +90,7 @@ void Engine::keyEvent(const fcitx::InputMethodEntry &entry,
 
   zmq::message_t keyMsg(serialized.size());
   memcpy(keyMsg.data(), serialized.data(), serialized.size());
-  sock->send(keyMsg, zmq::send_flags::dontwait);
+  sock->send(keyMsg, zmq::send_flags::none);
 
   zmq::message_t reply;
   zmq::recv_result_t maybeSize = sock->recv(reply);

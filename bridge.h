@@ -9,6 +9,7 @@
 #include <fcitx/addoninstance.h>
 #include <fcitx/addonmanager.h>
 #include <fcitx/candidatelist.h>
+#include <fcitx/event.h>
 #include <fcitx/inputcontext.h>
 #include <fcitx/inputcontextproperty.h>
 #include <fcitx/inputmethodengine.h>
@@ -51,6 +52,8 @@ private:
   fcitx::EventDispatcher *dispatcher;
   bool isInSession;
   std::shared_mutex mtxInSession;
+
+  bool keep(fcitx::KeyEvent &event);
 };
 
 class Server {

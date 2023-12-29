@@ -38,6 +38,15 @@ public:
   void select(fcitx::InputContext *) const {};
 };
 
+// If we are out of an input session and the following key happens, we do not
+// pass it to the input method engine.
+static const std::array<fcitx::Key, 10> outOfSessionSkip = {
+    fcitx::Key{FcitxKey_Return}, fcitx::Key{FcitxKey_space},
+    fcitx::Key{FcitxKey_Escape}, fcitx::Key{FcitxKey_Tab},
+    fcitx::Key{FcitxKey_Up},     fcitx::Key{FcitxKey_Down},
+    fcitx::Key{FcitxKey_Left},   fcitx::Key{FcitxKey_Right},
+    fcitx::Key{FcitxKey_Delete}, fcitx::Key{FcitxKey_BackSpace}};
+
 Engine *engine;
 
 Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
@@ -80,9 +89,7 @@ void Engine::keyEvent(const fcitx::InputMethodEntry &entry,
                       fcitx::KeyEvent &keyEvent) {
   FCITX_UNUSED(entry);
 
-  if (keyEvent.isRelease() || keyEvent.key().states() ||
-      keyEvent.key().isModifier() || keyEvent.key().isUAZ() ||
-      (!keyEvent.key().isLAZ() && !inSession())) {
+  if (!keep(keyEvent)) {
     return;
   }
 
@@ -130,6 +137,23 @@ std::unique_ptr<fcitx::CommonCandidateList> Engine::makeCandidateList() {
   candidateList->setPageSize(instance_->globalConfig().defaultPageSize());
 
   return candidateList;
+}
+
+bool Engine::keep(fcitx::KeyEvent &event) {
+  // Regardless whether we are in an input session, we do not keep.
+  if (event.isRelease() || event.key().isModifier() || event.key().isUAZ()) {
+    return false;
+  }
+
+  if (inSession()) {
+    return true;
+  }
+
+  // Not in an input session
+  if (event.key().checkKeyList(outOfSessionSkip)) {
+    return false;
+  }
+  return true;
 }
 
 Server::Server() {

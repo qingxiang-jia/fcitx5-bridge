@@ -20,13 +20,13 @@
 #include <vector>
 #include <zmq.hpp>
 
-class ImsEngine;
-class ImsServer;
+class Engine;
+class Server;
 
-class ImsEngine : public fcitx::InputMethodEngineV2 {
+class Engine : public fcitx::InputMethodEngineV2 {
 public:
-  ImsEngine(fcitx::Instance *instance);
-  ~ImsEngine();
+  Engine(fcitx::Instance *instance);
+  ~Engine();
 
   void activate(const fcitx::InputMethodEntry &entry,
                 fcitx::InputContextEvent &event) override;
@@ -47,30 +47,30 @@ private:
   fcitx::InputContext *ic;
   zmq::context_t *ctx;
   zmq::socket_t *pub;
-  ImsServer *imsServer;
+  Server *server;
   fcitx::EventDispatcher *dispatcher;
   bool isInSession;
   std::shared_mutex mtxInSession;
 };
 
-class ImsServer {
+class Server {
 public:
-  ImsServer();
-  void setEngine(ImsEngine *engine);
+  Server();
+  void setEngine(Engine *engine);
   void setDispatcher(fcitx::EventDispatcher *dispatcher);
   void serve();
-  ~ImsServer();
+  ~Server();
 
 private:
   zmq::context_t *ctx;
   zmq::socket_t *rep;
-  ImsEngine *engine;
+  Engine *engine;
   fcitx::EventDispatcher *dispatcher;
   void dispatch(CommandToFcitx *);
 };
 
-class ImsEngineFactory : public fcitx::AddonFactory {
+class EngineFactory : public fcitx::AddonFactory {
   fcitx::AddonInstance *create(fcitx::AddonManager *manager) override {
-    return new ImsEngine(manager->instance());
+    return new Engine(manager->instance());
   }
 };

@@ -32,15 +32,15 @@
 #include <zmq.h>
 #include <zmq.hpp>
 
-class ImsCandidate : public fcitx::CandidateWord {
+class Candidate : public fcitx::CandidateWord {
 public:
-  ImsCandidate(fcitx::Text text) { setText(text); }
+  Candidate(fcitx::Text text) { setText(text); }
   void select(fcitx::InputContext *) const {};
 };
 
-ImsEngine *engine;
+Engine *engine;
 
-ImsEngine::ImsEngine(fcitx::Instance *instance) : instance_(instance) {
+Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
   engine = this;
   isInSession = false;
 
@@ -52,32 +52,32 @@ ImsEngine::ImsEngine(fcitx::Instance *instance) : instance_(instance) {
   this->dispatcher = dispatcher;
   dispatcher->attach(&instance_->eventLoop());
 
-  imsServer = new ImsServer();
-  imsServer->setEngine(this);
-  imsServer->setDispatcher(dispatcher);
-  std::thread serverThread(&ImsServer::serve, imsServer);
+  server = new Server();
+  server->setEngine(this);
+  server->setDispatcher(dispatcher);
+  std::thread serverThread(&Server::serve, server);
   serverThread.detach();
 }
 
-ImsEngine::~ImsEngine() {
+Engine::~Engine() {
   pub->close();
   ctx->shutdown();
   ctx->close();
   delete pub;
   delete ctx;
-  delete imsServer;
+  delete server;
   dispatcher->detach();
   delete dispatcher;
 }
 
-void ImsEngine::activate(const fcitx::InputMethodEntry &entry,
-                         fcitx::InputContextEvent &event) {
+void Engine::activate(const fcitx::InputMethodEntry &entry,
+                      fcitx::InputContextEvent &event) {
   FCITX_UNUSED(entry);
   ic = event.inputContext();
 }
 
-void ImsEngine::keyEvent(const fcitx::InputMethodEntry &entry,
-                         fcitx::KeyEvent &keyEvent) {
+void Engine::keyEvent(const fcitx::InputMethodEntry &entry,
+                      fcitx::KeyEvent &keyEvent) {
   FCITX_UNUSED(entry);
 
   if (keyEvent.isRelease() || keyEvent.key().states() ||
@@ -98,18 +98,18 @@ void ImsEngine::keyEvent(const fcitx::InputMethodEntry &entry,
   keyEvent.filterAndAccept();
 }
 
-void ImsEngine::reset(const fcitx::InputMethodEntry &,
-                      fcitx::InputContextEvent &event) {
+void Engine::reset(const fcitx::InputMethodEntry &,
+                   fcitx::InputContextEvent &event) {
   FCITX_UNUSED(event);
 }
 
-void ImsEngine::inSession(const bool isInSession) {
+void Engine::inSession(const bool isInSession) {
   this->mtxInSession.lock();
   this->isInSession = isInSession;
   this->mtxInSession.unlock();
 }
 
-bool ImsEngine::inSession() {
+bool Engine::inSession() {
   this->mtxInSession.lock_shared();
   bool toReturn = this->isInSession;
   this->mtxInSession.unlock_shared();
@@ -117,11 +117,11 @@ bool ImsEngine::inSession() {
   return toReturn;
 }
 
-fcitx::InputContext *ImsEngine::getInputContext() { return ic; }
+fcitx::InputContext *Engine::getInputContext() { return ic; }
 
-fcitx::Instance *ImsEngine::getInstance() { return instance_; }
+fcitx::Instance *Engine::getInstance() { return instance_; }
 
-std::unique_ptr<fcitx::CommonCandidateList> ImsEngine::makeCandidateList() {
+std::unique_ptr<fcitx::CommonCandidateList> Engine::makeCandidateList() {
   auto candidateList = std::make_unique<fcitx::CommonCandidateList>();
   candidateList->setLabels(
       std::vector<std::string>{"1. ", "2. ", "3. ", "4. ", "5. "});
@@ -132,13 +132,13 @@ std::unique_ptr<fcitx::CommonCandidateList> ImsEngine::makeCandidateList() {
   return candidateList;
 }
 
-ImsServer::ImsServer() {
+Server::Server() {
   ctx = new zmq::context_t();
   rep = new zmq::socket_t(*ctx, ZMQ_REP);
   rep->bind("tcp://127.0.0.1:8086");
 }
 
-ImsServer::~ImsServer() {
+Server::~Server() {
   rep->close();
   ctx->shutdown();
   ctx->close();
@@ -146,13 +146,13 @@ ImsServer::~ImsServer() {
   delete ctx;
 }
 
-void ImsServer::setEngine(ImsEngine *engine) { this->engine = engine; }
+void Server::setEngine(Engine *engine) { this->engine = engine; }
 
-void ImsServer::setDispatcher(fcitx::EventDispatcher *dispatcher) {
+void Server::setDispatcher(fcitx::EventDispatcher *dispatcher) {
   this->dispatcher = dispatcher;
 }
 
-void ImsServer::dispatch(CommandToFcitx *cmd) {
+void Server::dispatch(CommandToFcitx *cmd) {
   if (engine == nullptr || engine->getInputContext() == nullptr) {
     return;
   }
@@ -198,7 +198,7 @@ void ImsServer::dispatch(CommandToFcitx *cmd) {
       for (int i = 0; i < candidates.size(); i++) {
         std::string candidate = candidates.Get(i);
         std::unique_ptr<fcitx::CandidateWord> fcitxCandidate =
-            std::make_unique<ImsCandidate>(fcitx::Text(candidate));
+            std::make_unique<Candidate>(fcitx::Text(candidate));
         clist->append(std::move(fcitxCandidate));
       }
     }
@@ -206,7 +206,7 @@ void ImsServer::dispatch(CommandToFcitx *cmd) {
   });
 }
 
-void ImsServer::serve() {
+void Server::serve() {
   zmq::message_t *msg = new zmq::message_t();
   zmq::message_t *empty = new zmq::message_t();
   while (true) {
@@ -234,4 +234,4 @@ void ImsServer::serve() {
   }
 }
 
-FCITX_ADDON_FACTORY(ImsEngineFactory);
+FCITX_ADDON_FACTORY(EngineFactory);

@@ -36,9 +36,6 @@ public:
   void reset(const fcitx::InputMethodEntry &,
              fcitx::InputContextEvent &event) override;
 
-  void inSession(const bool isInSession);
-  bool inSession();
-
   fcitx::InputContext *getInputContext();
   fcitx::Instance *getInstance();
   std::unique_ptr<fcitx::CommonCandidateList> makeCandidateList();
@@ -50,10 +47,6 @@ private:
   zmq::socket_t *pub;
   Server *server;
   fcitx::EventDispatcher *dispatcher;
-  bool isInSession;
-  std::shared_mutex mtxInSession;
-
-  bool keep(fcitx::KeyEvent &event);
 };
 
 class Server {

@@ -21,25 +21,6 @@ namespace _pb = ::google::protobuf;
 namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 
-inline constexpr UpdateSessionStatus::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : in_session_{false},
-        _cached_size_{0} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR UpdateSessionStatus::UpdateSessionStatus(::_pbi::ConstantInitialized)
-    : _impl_(::_pbi::ConstantInitialized()) {}
-struct UpdateSessionStatusDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR UpdateSessionStatusDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~UpdateSessionStatusDefaultTypeInternal() {}
-  union {
-    UpdateSessionStatus _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UpdateSessionStatusDefaultTypeInternal _UpdateSessionStatus_default_instance_;
-
 inline constexpr UpdatePreedit::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : text_(
@@ -139,7 +120,7 @@ struct CommandToFcitxDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CommandToFcitxDefaultTypeInternal _CommandToFcitx_default_instance_;
-static ::_pb::Metadata file_level_metadata_msgs_2eproto[6];
+static ::_pb::Metadata file_level_metadata_msgs_2eproto[5];
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_msgs_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor**
@@ -154,7 +135,6 @@ const ::uint32_t TableStruct_msgs_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    ::_pbi::kInvalidFieldOffsetTag,
     ::_pbi::kInvalidFieldOffsetTag,
     ::_pbi::kInvalidFieldOffsetTag,
     ::_pbi::kInvalidFieldOffsetTag,
@@ -178,15 +158,6 @@ const ::uint32_t TableStruct_msgs_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::UpdatePreedit, _impl_.text_),
     ~0u,  // no _has_bits_
-    PROTOBUF_FIELD_OFFSET(::UpdateSessionStatus, _internal_metadata_),
-    ~0u,  // no _extensions_
-    ~0u,  // no _oneof_case_
-    ~0u,  // no _weak_field_map_
-    ~0u,  // no _inlined_string_donated_
-    ~0u,  // no _split_
-    ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::UpdateSessionStatus, _impl_.in_session_),
-    ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::UpdateCandidates, _internal_metadata_),
     ~0u,  // no _extensions_
     ~0u,  // no _oneof_case_
@@ -209,44 +180,40 @@ const ::uint32_t TableStruct_msgs_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
 static const ::_pbi::MigrationSchema
     schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
         {0, -1, -1, sizeof(::CommandToFcitx)},
-        {13, -1, -1, sizeof(::CommitText)},
-        {22, -1, -1, sizeof(::UpdatePreedit)},
-        {31, -1, -1, sizeof(::UpdateSessionStatus)},
-        {40, -1, -1, sizeof(::UpdateCandidates)},
-        {49, -1, -1, sizeof(::KeyEvent)},
+        {12, -1, -1, sizeof(::CommitText)},
+        {21, -1, -1, sizeof(::UpdatePreedit)},
+        {30, -1, -1, sizeof(::UpdateCandidates)},
+        {39, -1, -1, sizeof(::KeyEvent)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
     &::_CommandToFcitx_default_instance_._instance,
     &::_CommitText_default_instance_._instance,
     &::_UpdatePreedit_default_instance_._instance,
-    &::_UpdateSessionStatus_default_instance_._instance,
     &::_UpdateCandidates_default_instance_._instance,
     &::_KeyEvent_default_instance_._instance,
 };
 const char descriptor_table_protodef_msgs_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-    "\n\nmsgs.proto\"\320\001\n\016CommandToFcitx\0225\n\025updat"
-    "e_session_status\030\001 \001(\0132\024.UpdateSessionSt"
-    "atusH\000\022\"\n\013commit_text\030\002 \001(\0132\013.CommitText"
-    "H\000\022(\n\016update_preedit\030\003 \001(\0132\016.UpdatePreed"
-    "itH\000\022.\n\021update_candidates\030\004 \001(\0132\021.Update"
-    "CandidatesH\000B\t\n\007command\"\032\n\nCommitText\022\014\n"
-    "\004text\030\001 \001(\t\"\035\n\rUpdatePreedit\022\014\n\004text\030\001 \001"
-    "(\t\")\n\023UpdateSessionStatus\022\022\n\nin_session\030"
-    "\001 \001(\010\"&\n\020UpdateCandidates\022\022\n\ncandidates\030"
-    "\001 \003(\t\"\027\n\010KeyEvent\022\013\n\003key\030\001 \001(\rb\006proto3"
+    "\n\nmsgs.proto\"\231\001\n\016CommandToFcitx\022\"\n\013commi"
+    "t_text\030\002 \001(\0132\013.CommitTextH\000\022(\n\016update_pr"
+    "eedit\030\003 \001(\0132\016.UpdatePreeditH\000\022.\n\021update_"
+    "candidates\030\004 \001(\0132\021.UpdateCandidatesH\000B\t\n"
+    "\007command\"\032\n\nCommitText\022\014\n\004text\030\001 \001(\t\"\035\n\r"
+    "UpdatePreedit\022\014\n\004text\030\001 \001(\t\"&\n\020UpdateCan"
+    "didates\022\022\n\ncandidates\030\001 \003(\t\"\027\n\010KeyEvent\022"
+    "\013\n\003key\030\001 \001(\rb\006proto3"
 };
 static ::absl::once_flag descriptor_table_msgs_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_msgs_2eproto = {
     false,
     false,
-    398,
+    300,
     descriptor_table_protodef_msgs_2eproto,
     "msgs.proto",
     &descriptor_table_msgs_2eproto_once,
     nullptr,
     0,
-    6,
+    5,
     schemas,
     file_default_instances,
     TableStruct_msgs_2eproto::offsets,
@@ -278,15 +245,11 @@ class CommandToFcitx::_Internal {
  public:
   static constexpr ::int32_t kOneofCaseOffset =
     PROTOBUF_FIELD_OFFSET(::CommandToFcitx, _impl_._oneof_case_);
-  static const ::UpdateSessionStatus& update_session_status(const CommandToFcitx* msg);
   static const ::CommitText& commit_text(const CommandToFcitx* msg);
   static const ::UpdatePreedit& update_preedit(const CommandToFcitx* msg);
   static const ::UpdateCandidates& update_candidates(const CommandToFcitx* msg);
 };
 
-const ::UpdateSessionStatus& CommandToFcitx::_Internal::update_session_status(const CommandToFcitx* msg) {
-  return *msg->_impl_.command_.update_session_status_;
-}
 const ::CommitText& CommandToFcitx::_Internal::commit_text(const CommandToFcitx* msg) {
   return *msg->_impl_.command_.commit_text_;
 }
@@ -295,19 +258,6 @@ const ::UpdatePreedit& CommandToFcitx::_Internal::update_preedit(const CommandTo
 }
 const ::UpdateCandidates& CommandToFcitx::_Internal::update_candidates(const CommandToFcitx* msg) {
   return *msg->_impl_.command_.update_candidates_;
-}
-void CommandToFcitx::set_allocated_update_session_status(::UpdateSessionStatus* update_session_status) {
-  ::google::protobuf::Arena* message_arena = GetArena();
-  clear_command();
-  if (update_session_status) {
-    ::google::protobuf::Arena* submessage_arena = update_session_status->GetArena();
-    if (message_arena != submessage_arena) {
-      update_session_status = ::google::protobuf::internal::GetOwnedMessage(message_arena, update_session_status, submessage_arena);
-    }
-    set_has_update_session_status();
-    _impl_.command_.update_session_status_ = update_session_status;
-  }
-  // @@protoc_insertion_point(field_set_allocated:CommandToFcitx.update_session_status)
 }
 void CommandToFcitx::set_allocated_commit_text(::CommitText* commit_text) {
   ::google::protobuf::Arena* message_arena = GetArena();
@@ -372,9 +322,6 @@ CommandToFcitx::CommandToFcitx(
   switch (command_case()) {
     case COMMAND_NOT_SET:
       break;
-      case kUpdateSessionStatus:
-        _impl_.command_.update_session_status_ = CreateMaybeMessage<::UpdateSessionStatus>(arena, *from._impl_.command_.update_session_status_);
-        break;
       case kCommitText:
         _impl_.command_.commit_text_ = CreateMaybeMessage<::CommitText>(arena, *from._impl_.command_.commit_text_);
         break;
@@ -415,12 +362,6 @@ void CommandToFcitx::clear_command() {
 // @@protoc_insertion_point(one_of_clear_start:CommandToFcitx)
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   switch (command_case()) {
-    case kUpdateSessionStatus: {
-      if (GetArena() == nullptr) {
-        delete _impl_.command_.update_session_status_;
-      }
-      break;
-    }
     case kCommitText: {
       if (GetArena() == nullptr) {
         delete _impl_.command_.commit_text_;
@@ -466,16 +407,16 @@ const char* CommandToFcitx::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 4, 4, 0, 2> CommandToFcitx::_table_ = {
+const ::_pbi::TcParseTable<0, 3, 3, 0, 2> CommandToFcitx::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
     4, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967281,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
-    4,  // num_aux_entries
+    3,  // num_field_entries
+    3,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     &_CommandToFcitx_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -484,20 +425,16 @@ const ::_pbi::TcParseTable<0, 4, 4, 0, 2> CommandToFcitx::_table_ = {
   }}, {{
     65535, 65535
   }}, {{
-    // .UpdateSessionStatus update_session_status = 1;
-    {PROTOBUF_FIELD_OFFSET(CommandToFcitx, _impl_.command_.update_session_status_), _Internal::kOneofCaseOffset + 0, 0,
-    (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .CommitText commit_text = 2;
-    {PROTOBUF_FIELD_OFFSET(CommandToFcitx, _impl_.command_.commit_text_), _Internal::kOneofCaseOffset + 0, 1,
+    {PROTOBUF_FIELD_OFFSET(CommandToFcitx, _impl_.command_.commit_text_), _Internal::kOneofCaseOffset + 0, 0,
     (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .UpdatePreedit update_preedit = 3;
-    {PROTOBUF_FIELD_OFFSET(CommandToFcitx, _impl_.command_.update_preedit_), _Internal::kOneofCaseOffset + 0, 2,
+    {PROTOBUF_FIELD_OFFSET(CommandToFcitx, _impl_.command_.update_preedit_), _Internal::kOneofCaseOffset + 0, 1,
     (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
     // .UpdateCandidates update_candidates = 4;
-    {PROTOBUF_FIELD_OFFSET(CommandToFcitx, _impl_.command_.update_candidates_), _Internal::kOneofCaseOffset + 0, 3,
+    {PROTOBUF_FIELD_OFFSET(CommandToFcitx, _impl_.command_.update_candidates_), _Internal::kOneofCaseOffset + 0, 2,
     (0 | ::_fl::kFcOneof | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::UpdateSessionStatus>()},
     {::_pbi::TcParser::GetTable<::CommitText>()},
     {::_pbi::TcParser::GetTable<::UpdatePreedit>()},
     {::_pbi::TcParser::GetTable<::UpdateCandidates>()},
@@ -513,12 +450,6 @@ const ::_pbi::TcParseTable<0, 4, 4, 0, 2> CommandToFcitx::_table_ = {
   (void)cached_has_bits;
 
   switch (command_case()) {
-    case kUpdateSessionStatus: {
-      target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
-          1, _Internal::update_session_status(this),
-          _Internal::update_session_status(this).GetCachedSize(), target, stream);
-      break;
-    }
     case kCommitText: {
       target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
           2, _Internal::commit_text(this),
@@ -558,12 +489,6 @@ const ::_pbi::TcParseTable<0, 4, 4, 0, 2> CommandToFcitx::_table_ = {
   (void) cached_has_bits;
 
   switch (command_case()) {
-    // .UpdateSessionStatus update_session_status = 1;
-    case kUpdateSessionStatus: {
-      total_size +=
-          1 + ::google::protobuf::internal::WireFormatLite::MessageSize(*_impl_.command_.update_session_status_);
-      break;
-    }
     // .CommitText commit_text = 2;
     case kCommitText: {
       total_size +=
@@ -606,11 +531,6 @@ void CommandToFcitx::MergeImpl(::google::protobuf::Message& to_msg, const ::goog
   (void) cached_has_bits;
 
   switch (from.command_case()) {
-    case kUpdateSessionStatus: {
-      _this->_internal_mutable_update_session_status()->::UpdateSessionStatus::MergeFrom(
-          from._internal_update_session_status());
-      break;
-    }
     case kCommitText: {
       _this->_internal_mutable_commit_text()->::CommitText::MergeFrom(
           from._internal_commit_text());
@@ -1041,175 +961,6 @@ void UpdatePreedit::InternalSwap(UpdatePreedit* PROTOBUF_RESTRICT other) {
 }
 // ===================================================================
 
-class UpdateSessionStatus::_Internal {
- public:
-};
-
-UpdateSessionStatus::UpdateSessionStatus(::google::protobuf::Arena* arena)
-    : ::google::protobuf::Message(arena) {
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:UpdateSessionStatus)
-}
-UpdateSessionStatus::UpdateSessionStatus(
-    ::google::protobuf::Arena* arena, const UpdateSessionStatus& from)
-    : UpdateSessionStatus(arena) {
-  MergeFrom(from);
-}
-inline PROTOBUF_NDEBUG_INLINE UpdateSessionStatus::Impl_::Impl_(
-    ::google::protobuf::internal::InternalVisibility visibility,
-    ::google::protobuf::Arena* arena)
-      : _cached_size_{0} {}
-
-inline void UpdateSessionStatus::SharedCtor(::_pb::Arena* arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.in_session_ = {};
-}
-UpdateSessionStatus::~UpdateSessionStatus() {
-  // @@protoc_insertion_point(destructor:UpdateSessionStatus)
-  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  SharedDtor();
-}
-inline void UpdateSessionStatus::SharedDtor() {
-  ABSL_DCHECK(GetArena() == nullptr);
-  _impl_.~Impl_();
-}
-
-PROTOBUF_NOINLINE void UpdateSessionStatus::Clear() {
-// @@protoc_insertion_point(message_clear_start:UpdateSessionStatus)
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.in_session_ = false;
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-const char* UpdateSessionStatus::_InternalParse(
-    const char* ptr, ::_pbi::ParseContext* ctx) {
-  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
-  return ptr;
-}
-
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 0, 2> UpdateSessionStatus::_table_ = {
-  {
-    0,  // no _has_bits_
-    0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    &_UpdateSessionStatus_default_instance_._instance,
-    ::_pbi::TcParser::GenericFallback,  // fallback
-  }, {{
-    // bool in_session = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(UpdateSessionStatus, _impl_.in_session_), 63>(),
-     {8, 63, 0, PROTOBUF_FIELD_OFFSET(UpdateSessionStatus, _impl_.in_session_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // bool in_session = 1;
-    {PROTOBUF_FIELD_OFFSET(UpdateSessionStatus, _impl_.in_session_), 0, 0,
-    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
-  }},
-  // no aux_entries
-  {{
-  }},
-};
-
-::uint8_t* UpdateSessionStatus::_InternalSerialize(
-    ::uint8_t* target,
-    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:UpdateSessionStatus)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  // bool in_session = 1;
-  if (this->_internal_in_session() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(
-        1, this->_internal_in_session(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:UpdateSessionStatus)
-  return target;
-}
-
-::size_t UpdateSessionStatus::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:UpdateSessionStatus)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // bool in_session = 1;
-  if (this->_internal_in_session() != 0) {
-    total_size += 2;
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::google::protobuf::Message::ClassData UpdateSessionStatus::_class_data_ = {
-    UpdateSessionStatus::MergeImpl,
-    nullptr,  // OnDemandRegisterArenaDtor
-};
-const ::google::protobuf::Message::ClassData* UpdateSessionStatus::GetClassData() const {
-  return &_class_data_;
-}
-
-void UpdateSessionStatus::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
-  auto* const _this = static_cast<UpdateSessionStatus*>(&to_msg);
-  auto& from = static_cast<const UpdateSessionStatus&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:UpdateSessionStatus)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from._internal_in_session() != 0) {
-    _this->_internal_set_in_session(from._internal_in_session());
-  }
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void UpdateSessionStatus::CopyFrom(const UpdateSessionStatus& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:UpdateSessionStatus)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-PROTOBUF_NOINLINE bool UpdateSessionStatus::IsInitialized() const {
-  return true;
-}
-
-::_pbi::CachedSize* UpdateSessionStatus::AccessCachedSize() const {
-  return &_impl_._cached_size_;
-}
-void UpdateSessionStatus::InternalSwap(UpdateSessionStatus* PROTOBUF_RESTRICT other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-        swap(_impl_.in_session_, other->_impl_.in_session_);
-}
-
-::google::protobuf::Metadata UpdateSessionStatus::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_msgs_2eproto_getter, &descriptor_table_msgs_2eproto_once,
-      file_level_metadata_msgs_2eproto[3]);
-}
-// ===================================================================
-
 class UpdateCandidates::_Internal {
  public:
 };
@@ -1391,7 +1142,7 @@ void UpdateCandidates::InternalSwap(UpdateCandidates* PROTOBUF_RESTRICT other) {
 ::google::protobuf::Metadata UpdateCandidates::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_msgs_2eproto_getter, &descriptor_table_msgs_2eproto_once,
-      file_level_metadata_msgs_2eproto[4]);
+      file_level_metadata_msgs_2eproto[3]);
 }
 // ===================================================================
 
@@ -1561,7 +1312,7 @@ void KeyEvent::InternalSwap(KeyEvent* PROTOBUF_RESTRICT other) {
 ::google::protobuf::Metadata KeyEvent::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_msgs_2eproto_getter, &descriptor_table_msgs_2eproto_once,
-      file_level_metadata_msgs_2eproto[5]);
+      file_level_metadata_msgs_2eproto[4]);
 }
 // @@protoc_insertion_point(namespace_scope)
 namespace google {

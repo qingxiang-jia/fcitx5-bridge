@@ -70,9 +70,6 @@ extern UpdateCandidatesDefaultTypeInternal _UpdateCandidates_default_instance_;
 class UpdatePreedit;
 struct UpdatePreeditDefaultTypeInternal;
 extern UpdatePreeditDefaultTypeInternal _UpdatePreedit_default_instance_;
-class UpdateSessionStatus;
-struct UpdateSessionStatusDefaultTypeInternal;
-extern UpdateSessionStatusDefaultTypeInternal _UpdateSessionStatus_default_instance_;
 namespace google {
 namespace protobuf {
 }  // namespace protobuf
@@ -83,181 +80,6 @@ namespace protobuf {
 
 
 // -------------------------------------------------------------------
-
-class UpdateSessionStatus final :
-    public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:UpdateSessionStatus) */ {
- public:
-  inline UpdateSessionStatus() : UpdateSessionStatus(nullptr) {}
-  ~UpdateSessionStatus() override;
-  template<typename = void>
-  explicit PROTOBUF_CONSTEXPR UpdateSessionStatus(::google::protobuf::internal::ConstantInitialized);
-
-  inline UpdateSessionStatus(const UpdateSessionStatus& from)
-      : UpdateSessionStatus(nullptr, from) {}
-  UpdateSessionStatus(UpdateSessionStatus&& from) noexcept
-    : UpdateSessionStatus() {
-    *this = ::std::move(from);
-  }
-
-  inline UpdateSessionStatus& operator=(const UpdateSessionStatus& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline UpdateSessionStatus& operator=(UpdateSessionStatus&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetArena() == from.GetArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const UpdateSessionStatus& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const UpdateSessionStatus* internal_default_instance() {
-    return reinterpret_cast<const UpdateSessionStatus*>(
-               &_UpdateSessionStatus_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    3;
-
-  friend void swap(UpdateSessionStatus& a, UpdateSessionStatus& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(UpdateSessionStatus* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetArena() != nullptr &&
-        GetArena() == other->GetArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetArena() == other->GetArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(UpdateSessionStatus* other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  UpdateSessionStatus* New(::google::protobuf::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<UpdateSessionStatus>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const UpdateSessionStatus& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom( const UpdateSessionStatus& from) {
-    UpdateSessionStatus::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  ::size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::google::protobuf::internal::ParseContext* ctx) final;
-  ::uint8_t* _InternalSerialize(
-      ::uint8_t* target, ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  ::google::protobuf::internal::CachedSize* AccessCachedSize() const final;
-  void SharedCtor(::google::protobuf::Arena* arena);
-  void SharedDtor();
-  void InternalSwap(UpdateSessionStatus* other);
-
-  private:
-  friend class ::google::protobuf::internal::AnyMetadata;
-  static ::absl::string_view FullMessageName() {
-    return "UpdateSessionStatus";
-  }
-  protected:
-  explicit UpdateSessionStatus(::google::protobuf::Arena* arena);
-  UpdateSessionStatus(::google::protobuf::Arena* arena, const UpdateSessionStatus& from);
-  public:
-
-  static const ClassData _class_data_;
-  const ::google::protobuf::Message::ClassData*GetClassData() const final;
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kInSessionFieldNumber = 1,
-  };
-  // bool in_session = 1;
-  void clear_in_session() ;
-  bool in_session() const;
-  void set_in_session(bool value);
-
-  private:
-  bool _internal_in_session() const;
-  void _internal_set_in_session(bool value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:UpdateSessionStatus)
- private:
-  class _Internal;
-
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<
-      0, 1, 0,
-      0, 2>
-      _table_;
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-
-        inline explicit constexpr Impl_(
-            ::google::protobuf::internal::ConstantInitialized) noexcept;
-        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
-                              ::google::protobuf::Arena* arena);
-        inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
-                              ::google::protobuf::Arena* arena, const Impl_& from);
-    bool in_session_;
-    mutable ::google::protobuf::internal::CachedSize _cached_size_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_msgs_2eproto;
-};// -------------------------------------------------------------------
 
 class UpdatePreedit final :
     public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:UpdatePreedit) */ {
@@ -499,7 +321,7 @@ class UpdateCandidates final :
                &_UpdateCandidates_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    3;
 
   friend void swap(UpdateCandidates& a, UpdateCandidates& b) {
     a.Swap(&b);
@@ -692,7 +514,7 @@ class KeyEvent final :
                &_KeyEvent_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    4;
 
   friend void swap(KeyEvent& a, KeyEvent& b) {
     a.Swap(&b);
@@ -1044,7 +866,6 @@ class CommandToFcitx final :
     return *internal_default_instance();
   }
   enum CommandCase {
-    kUpdateSessionStatus = 1,
     kCommitText = 2,
     kUpdatePreedit = 3,
     kUpdateCandidates = 4,
@@ -1129,30 +950,10 @@ class CommandToFcitx final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUpdateSessionStatusFieldNumber = 1,
     kCommitTextFieldNumber = 2,
     kUpdatePreeditFieldNumber = 3,
     kUpdateCandidatesFieldNumber = 4,
   };
-  // .UpdateSessionStatus update_session_status = 1;
-  bool has_update_session_status() const;
-  private:
-  bool _internal_has_update_session_status() const;
-
-  public:
-  void clear_update_session_status() ;
-  const ::UpdateSessionStatus& update_session_status() const;
-  PROTOBUF_NODISCARD ::UpdateSessionStatus* release_update_session_status();
-  ::UpdateSessionStatus* mutable_update_session_status();
-  void set_allocated_update_session_status(::UpdateSessionStatus* value);
-  void unsafe_arena_set_allocated_update_session_status(::UpdateSessionStatus* value);
-  ::UpdateSessionStatus* unsafe_arena_release_update_session_status();
-
-  private:
-  const ::UpdateSessionStatus& _internal_update_session_status() const;
-  ::UpdateSessionStatus* _internal_mutable_update_session_status();
-
-  public:
   // .CommitText commit_text = 2;
   bool has_commit_text() const;
   private:
@@ -1215,7 +1016,6 @@ class CommandToFcitx final :
   // @@protoc_insertion_point(class_scope:CommandToFcitx)
  private:
   class _Internal;
-  void set_has_update_session_status();
   void set_has_commit_text();
   void set_has_update_preedit();
   void set_has_update_candidates();
@@ -1225,7 +1025,7 @@ class CommandToFcitx final :
 
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      0, 4, 4,
+      0, 3, 3,
       0, 2>
       _table_;
   friend class ::google::protobuf::MessageLite;
@@ -1245,7 +1045,6 @@ class CommandToFcitx final :
     union CommandUnion {
       constexpr CommandUnion() : _constinit_{} {}
         ::google::protobuf::internal::ConstantInitialized _constinit_;
-      ::UpdateSessionStatus* update_session_status_;
       ::CommitText* commit_text_;
       ::UpdatePreedit* update_preedit_;
       ::UpdateCandidates* update_candidates_;
@@ -1274,82 +1073,6 @@ class CommandToFcitx final :
 // -------------------------------------------------------------------
 
 // CommandToFcitx
-
-// .UpdateSessionStatus update_session_status = 1;
-inline bool CommandToFcitx::has_update_session_status() const {
-  return command_case() == kUpdateSessionStatus;
-}
-inline bool CommandToFcitx::_internal_has_update_session_status() const {
-  return command_case() == kUpdateSessionStatus;
-}
-inline void CommandToFcitx::set_has_update_session_status() {
-  _impl_._oneof_case_[0] = kUpdateSessionStatus;
-}
-inline void CommandToFcitx::clear_update_session_status() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  if (command_case() == kUpdateSessionStatus) {
-    if (GetArena() == nullptr) {
-      delete _impl_.command_.update_session_status_;
-    }
-    clear_has_command();
-  }
-}
-inline ::UpdateSessionStatus* CommandToFcitx::release_update_session_status() {
-  // @@protoc_insertion_point(field_release:CommandToFcitx.update_session_status)
-  if (command_case() == kUpdateSessionStatus) {
-    clear_has_command();
-    auto* temp = _impl_.command_.update_session_status_;
-    if (GetArena() != nullptr) {
-      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
-    }
-    _impl_.command_.update_session_status_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline const ::UpdateSessionStatus& CommandToFcitx::_internal_update_session_status() const {
-  return command_case() == kUpdateSessionStatus ? *_impl_.command_.update_session_status_ : reinterpret_cast<::UpdateSessionStatus&>(::_UpdateSessionStatus_default_instance_);
-}
-inline const ::UpdateSessionStatus& CommandToFcitx::update_session_status() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:CommandToFcitx.update_session_status)
-  return _internal_update_session_status();
-}
-inline ::UpdateSessionStatus* CommandToFcitx::unsafe_arena_release_update_session_status() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:CommandToFcitx.update_session_status)
-  if (command_case() == kUpdateSessionStatus) {
-    clear_has_command();
-    auto* temp = _impl_.command_.update_session_status_;
-    _impl_.command_.update_session_status_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void CommandToFcitx::unsafe_arena_set_allocated_update_session_status(::UpdateSessionStatus* value) {
-  // We rely on the oneof clear method to free the earlier contents
-  // of this oneof. We can directly use the pointer we're given to
-  // set the new value.
-  clear_command();
-  if (value) {
-    set_has_update_session_status();
-    _impl_.command_.update_session_status_ = value;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:CommandToFcitx.update_session_status)
-}
-inline ::UpdateSessionStatus* CommandToFcitx::_internal_mutable_update_session_status() {
-  if (command_case() != kUpdateSessionStatus) {
-    clear_command();
-    set_has_update_session_status();
-    _impl_.command_.update_session_status_ = CreateMaybeMessage<::UpdateSessionStatus>(GetArena());
-  }
-  return _impl_.command_.update_session_status_;
-}
-inline ::UpdateSessionStatus* CommandToFcitx::mutable_update_session_status() ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  ::UpdateSessionStatus* _msg = _internal_mutable_update_session_status();
-  // @@protoc_insertion_point(field_mutable:CommandToFcitx.update_session_status)
-  return _msg;
-}
 
 // .CommitText commit_text = 2;
 inline bool CommandToFcitx::has_commit_text() const {
@@ -1700,33 +1423,6 @@ inline void UpdatePreedit::set_allocated_text(std::string* value) {
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:UpdatePreedit.text)
-}
-
-// -------------------------------------------------------------------
-
-// UpdateSessionStatus
-
-// bool in_session = 1;
-inline void UpdateSessionStatus::clear_in_session() {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  _impl_.in_session_ = false;
-}
-inline bool UpdateSessionStatus::in_session() const {
-  // @@protoc_insertion_point(field_get:UpdateSessionStatus.in_session)
-  return _internal_in_session();
-}
-inline void UpdateSessionStatus::set_in_session(bool value) {
-  _internal_set_in_session(value);
-  // @@protoc_insertion_point(field_set:UpdateSessionStatus.in_session)
-}
-inline bool UpdateSessionStatus::_internal_in_session() const {
-  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.in_session_;
-}
-inline void UpdateSessionStatus::_internal_set_in_session(bool value) {
-  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  ;
-  _impl_.in_session_ = value;
 }
 
 // -------------------------------------------------------------------

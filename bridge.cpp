@@ -38,24 +38,14 @@ public:
   void select(fcitx::InputContext *) const {};
 };
 
-// If we are out of an input session and the following key happens, we do not
-// pass it to the input method engine.
-static const std::array<fcitx::Key, 10> outOfSessionSkip = {
-    fcitx::Key{FcitxKey_Return}, fcitx::Key{FcitxKey_space},
-    fcitx::Key{FcitxKey_Escape}, fcitx::Key{FcitxKey_Tab},
-    fcitx::Key{FcitxKey_Up},     fcitx::Key{FcitxKey_Down},
-    fcitx::Key{FcitxKey_Left},   fcitx::Key{FcitxKey_Right},
-    fcitx::Key{FcitxKey_Delete}, fcitx::Key{FcitxKey_BackSpace}};
-
 Engine *engine;
 
 Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
   engine = this;
-  isInSession = false;
 
   ctx = new zmq::context_t();
-  pub = new zmq::socket_t(*ctx, ZMQ_PUB);
-  pub->bind("tcp://127.0.0.1:8085");
+  sock = new zmq::socket_t(*ctx, ZMQ_REQ);
+  sock->connect("tcp://127.0.0.1:8085");
 
   fcitx::EventDispatcher *dispatcher = new fcitx::EventDispatcher();
   this->dispatcher = dispatcher;
@@ -69,10 +59,10 @@ Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
 }
 
 Engine::~Engine() {
-  pub->close();
+  sock->close();
   ctx->shutdown();
   ctx->close();
-  delete pub;
+  delete sock;
   delete ctx;
   delete server;
   dispatcher->detach();
@@ -89,7 +79,7 @@ void Engine::keyEvent(const fcitx::InputMethodEntry &entry,
                       fcitx::KeyEvent &keyEvent) {
   FCITX_UNUSED(entry);
 
-  if (!keep(keyEvent)) {
+  if (keyEvent.isRelease() || keyEvent.key().isModifier()) {
     return;
   }
 
@@ -100,28 +90,31 @@ void Engine::keyEvent(const fcitx::InputMethodEntry &entry,
 
   zmq::message_t keyMsg(serialized.size());
   memcpy(keyMsg.data(), serialized.data(), serialized.size());
-  pub->send(keyMsg, zmq::send_flags::dontwait);
+  sock->send(keyMsg, zmq::send_flags::none);
 
-  keyEvent.filterAndAccept();
+  zmq::message_t reply;
+  zmq::recv_result_t maybeSize = sock->recv(reply);
+
+  if (!maybeSize.has_value()) {
+    return;
+    // The input method engine should reply with KeyEventReply, but if nothing
+    // is given, key event is not accepted.
+  }
+  auto size = maybeSize.value();
+  auto data = reply.data();
+  KeyEventReply keyEventReply;
+  if (!keyEventReply.ParseFromArray(data, size)) {
+    return;
+    // If not KeyEventReply sent back, key event is not accepted.
+  }
+  if (keyEventReply.accepted()) {
+    keyEvent.filterAndAccept();
+  }
 }
 
 void Engine::reset(const fcitx::InputMethodEntry &,
                    fcitx::InputContextEvent &event) {
   FCITX_UNUSED(event);
-}
-
-void Engine::inSession(const bool isInSession) {
-  this->mtxInSession.lock();
-  this->isInSession = isInSession;
-  this->mtxInSession.unlock();
-}
-
-bool Engine::inSession() {
-  this->mtxInSession.lock_shared();
-  bool toReturn = this->isInSession;
-  this->mtxInSession.unlock_shared();
-
-  return toReturn;
 }
 
 fcitx::InputContext *Engine::getInputContext() { return ic; }
@@ -139,34 +132,17 @@ std::unique_ptr<fcitx::CommonCandidateList> Engine::makeCandidateList() {
   return candidateList;
 }
 
-bool Engine::keep(fcitx::KeyEvent &event) {
-  // Regardless whether we are in an input session, we do not keep.
-  if (event.isRelease() || event.key().isModifier() || event.key().isUAZ()) {
-    return false;
-  }
-
-  if (inSession()) {
-    return true;
-  }
-
-  // Not in an input session
-  if (event.key().checkKeyList(outOfSessionSkip)) {
-    return false;
-  }
-  return true;
-}
-
 Server::Server() {
   ctx = new zmq::context_t();
-  rep = new zmq::socket_t(*ctx, ZMQ_REP);
-  rep->bind("tcp://127.0.0.1:8086");
+  sock = new zmq::socket_t(*ctx, ZMQ_REP);
+  sock->bind("tcp://127.0.0.1:8086");
 }
 
 Server::~Server() {
-  rep->close();
+  sock->close();
   ctx->shutdown();
   ctx->close();
-  delete rep;
+  delete sock;
   delete ctx;
 }
 
@@ -185,12 +161,6 @@ void Server::dispatch(CommandToFcitx *cmd) {
   dispatcher->schedule([engine = engine, cmd = *cmd]() {
     auto ic = engine->getInputContext();
     ic->inputPanel().reset();
-
-    if (cmd.has_update_session_status()) {
-      auto inSession = cmd.update_session_status().in_session();
-      engine->inSession(inSession);
-      return;
-    }
 
     if (cmd.has_commit_text()) {
       auto text = cmd.commit_text().text();
@@ -237,7 +207,7 @@ void Server::serve() {
     // Receive request.
     zmq::recv_result_t maybeSize;
     try {
-      maybeSize = rep->recv(*msg);
+      maybeSize = sock->recv(*msg);
     } catch (const zmq::error_t &e) {
       exit(0);
     }
@@ -254,7 +224,7 @@ void Server::serve() {
     }
 
     // Signal process completion.
-    maybeSize = rep->send(*empty, zmq::send_flags::none);
+    maybeSize = sock->send(*empty, zmq::send_flags::none);
   }
 }
 

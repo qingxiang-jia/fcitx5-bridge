@@ -61,6 +61,25 @@ struct UpdateCandidatesDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UpdateCandidatesDefaultTypeInternal _UpdateCandidates_default_instance_;
 
+inline constexpr KeyEventReply::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : accepted_{false},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR KeyEventReply::KeyEventReply(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
+struct KeyEventReplyDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR KeyEventReplyDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~KeyEventReplyDefaultTypeInternal() {}
+  union {
+    KeyEventReply _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 KeyEventReplyDefaultTypeInternal _KeyEventReply_default_instance_;
+
 inline constexpr KeyEvent::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : key_{0u},
@@ -120,7 +139,7 @@ struct CommandToFcitxDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CommandToFcitxDefaultTypeInternal _CommandToFcitx_default_instance_;
-static ::_pb::Metadata file_level_metadata_msgs_2eproto[5];
+static ::_pb::Metadata file_level_metadata_msgs_2eproto[6];
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_msgs_2eproto = nullptr;
 static constexpr const ::_pb::ServiceDescriptor**
@@ -175,6 +194,15 @@ const ::uint32_t TableStruct_msgs_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
     PROTOBUF_FIELD_OFFSET(::KeyEvent, _impl_.key_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::KeyEventReply, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::KeyEventReply, _impl_.accepted_),
 };
 
 static const ::_pbi::MigrationSchema
@@ -184,6 +212,7 @@ static const ::_pbi::MigrationSchema
         {21, -1, -1, sizeof(::UpdatePreedit)},
         {30, -1, -1, sizeof(::UpdateCandidates)},
         {39, -1, -1, sizeof(::KeyEvent)},
+        {48, -1, -1, sizeof(::KeyEventReply)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -192,6 +221,7 @@ static const ::_pb::Message* const file_default_instances[] = {
     &::_UpdatePreedit_default_instance_._instance,
     &::_UpdateCandidates_default_instance_._instance,
     &::_KeyEvent_default_instance_._instance,
+    &::_KeyEventReply_default_instance_._instance,
 };
 const char descriptor_table_protodef_msgs_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
     "\n\nmsgs.proto\"\231\001\n\016CommandToFcitx\022\"\n\013commi"
@@ -201,19 +231,20 @@ const char descriptor_table_protodef_msgs_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
     "\007command\"\032\n\nCommitText\022\014\n\004text\030\001 \001(\t\"\035\n\r"
     "UpdatePreedit\022\014\n\004text\030\001 \001(\t\"&\n\020UpdateCan"
     "didates\022\022\n\ncandidates\030\001 \003(\t\"\027\n\010KeyEvent\022"
-    "\013\n\003key\030\001 \001(\rb\006proto3"
+    "\013\n\003key\030\001 \001(\r\"!\n\rKeyEventReply\022\020\n\010accepte"
+    "d\030\001 \001(\010b\006proto3"
 };
 static ::absl::once_flag descriptor_table_msgs_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_msgs_2eproto = {
     false,
     false,
-    300,
+    335,
     descriptor_table_protodef_msgs_2eproto,
     "msgs.proto",
     &descriptor_table_msgs_2eproto_once,
     nullptr,
     0,
-    5,
+    6,
     schemas,
     file_default_instances,
     TableStruct_msgs_2eproto::offsets,
@@ -1313,6 +1344,175 @@ void KeyEvent::InternalSwap(KeyEvent* PROTOBUF_RESTRICT other) {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_msgs_2eproto_getter, &descriptor_table_msgs_2eproto_once,
       file_level_metadata_msgs_2eproto[4]);
+}
+// ===================================================================
+
+class KeyEventReply::_Internal {
+ public:
+};
+
+KeyEventReply::KeyEventReply(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:KeyEventReply)
+}
+KeyEventReply::KeyEventReply(
+    ::google::protobuf::Arena* arena, const KeyEventReply& from)
+    : KeyEventReply(arena) {
+  MergeFrom(from);
+}
+inline PROTOBUF_NDEBUG_INLINE KeyEventReply::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : _cached_size_{0} {}
+
+inline void KeyEventReply::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  _impl_.accepted_ = {};
+}
+KeyEventReply::~KeyEventReply() {
+  // @@protoc_insertion_point(destructor:KeyEventReply)
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  SharedDtor();
+}
+inline void KeyEventReply::SharedDtor() {
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.~Impl_();
+}
+
+PROTOBUF_NOINLINE void KeyEventReply::Clear() {
+// @@protoc_insertion_point(message_clear_start:KeyEventReply)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.accepted_ = false;
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+const char* KeyEventReply::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
+  return ptr;
+}
+
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 0, 2> KeyEventReply::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_KeyEventReply_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // bool accepted = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(KeyEventReply, _impl_.accepted_), 63>(),
+     {8, 63, 0, PROTOBUF_FIELD_OFFSET(KeyEventReply, _impl_.accepted_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // bool accepted = 1;
+    {PROTOBUF_FIELD_OFFSET(KeyEventReply, _impl_.accepted_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
+  }},
+  // no aux_entries
+  {{
+  }},
+};
+
+::uint8_t* KeyEventReply::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:KeyEventReply)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // bool accepted = 1;
+  if (this->_internal_accepted() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        1, this->_internal_accepted(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:KeyEventReply)
+  return target;
+}
+
+::size_t KeyEventReply::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:KeyEventReply)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bool accepted = 1;
+  if (this->_internal_accepted() != 0) {
+    total_size += 2;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::google::protobuf::Message::ClassData KeyEventReply::_class_data_ = {
+    KeyEventReply::MergeImpl,
+    nullptr,  // OnDemandRegisterArenaDtor
+};
+const ::google::protobuf::Message::ClassData* KeyEventReply::GetClassData() const {
+  return &_class_data_;
+}
+
+void KeyEventReply::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
+  auto* const _this = static_cast<KeyEventReply*>(&to_msg);
+  auto& from = static_cast<const KeyEventReply&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:KeyEventReply)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_accepted() != 0) {
+    _this->_internal_set_accepted(from._internal_accepted());
+  }
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void KeyEventReply::CopyFrom(const KeyEventReply& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:KeyEventReply)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+PROTOBUF_NOINLINE bool KeyEventReply::IsInitialized() const {
+  return true;
+}
+
+::_pbi::CachedSize* KeyEventReply::AccessCachedSize() const {
+  return &_impl_._cached_size_;
+}
+void KeyEventReply::InternalSwap(KeyEventReply* PROTOBUF_RESTRICT other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+        swap(_impl_.accepted_, other->_impl_.accepted_);
+}
+
+::google::protobuf::Metadata KeyEventReply::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_msgs_2eproto_getter, &descriptor_table_msgs_2eproto_once,
+      file_level_metadata_msgs_2eproto[5]);
 }
 // @@protoc_insertion_point(namespace_scope)
 namespace google {

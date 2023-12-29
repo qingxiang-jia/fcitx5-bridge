@@ -15,3 +15,5 @@ message UpdatePreedit { string text = 1; }
 message UpdateCandidates { repeated string candidates = 1; }
 
 message KeyEvent { uint32 key = 1; }
+
+message KeyEventReply { bool accepted = 1; }

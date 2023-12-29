@@ -44,8 +44,8 @@ Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
   engine = this;
 
   ctx = new zmq::context_t();
-  pub = new zmq::socket_t(*ctx, ZMQ_PUB);
-  pub->bind("tcp://127.0.0.1:8085");
+  sock = new zmq::socket_t(*ctx, ZMQ_PUB);
+  sock->bind("tcp://127.0.0.1:8085");
 
   fcitx::EventDispatcher *dispatcher = new fcitx::EventDispatcher();
   this->dispatcher = dispatcher;
@@ -59,10 +59,10 @@ Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
 }
 
 Engine::~Engine() {
-  pub->close();
+  sock->close();
   ctx->shutdown();
   ctx->close();
-  delete pub;
+  delete sock;
   delete ctx;
   delete server;
   dispatcher->detach();
@@ -90,7 +90,7 @@ void Engine::keyEvent(const fcitx::InputMethodEntry &entry,
 
   zmq::message_t keyMsg(serialized.size());
   memcpy(keyMsg.data(), serialized.data(), serialized.size());
-  pub->send(keyMsg, zmq::send_flags::dontwait);
+  sock->send(keyMsg, zmq::send_flags::dontwait);
 
   keyEvent.filterAndAccept();
 }
@@ -117,15 +117,15 @@ std::unique_ptr<fcitx::CommonCandidateList> Engine::makeCandidateList() {
 
 Server::Server() {
   ctx = new zmq::context_t();
-  rep = new zmq::socket_t(*ctx, ZMQ_REP);
-  rep->bind("tcp://127.0.0.1:8086");
+  sock = new zmq::socket_t(*ctx, ZMQ_REP);
+  sock->bind("tcp://127.0.0.1:8086");
 }
 
 Server::~Server() {
-  rep->close();
+  sock->close();
   ctx->shutdown();
   ctx->close();
-  delete rep;
+  delete sock;
   delete ctx;
 }
 
@@ -190,7 +190,7 @@ void Server::serve() {
     // Receive request.
     zmq::recv_result_t maybeSize;
     try {
-      maybeSize = rep->recv(*msg);
+      maybeSize = sock->recv(*msg);
     } catch (const zmq::error_t &e) {
       exit(0);
     }
@@ -207,7 +207,7 @@ void Server::serve() {
     }
 
     // Signal process completion.
-    maybeSize = rep->send(*empty, zmq::send_flags::none);
+    maybeSize = sock->send(*empty, zmq::send_flags::none);
   }
 }
 

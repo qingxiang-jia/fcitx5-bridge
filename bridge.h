@@ -44,7 +44,7 @@ private:
   fcitx::Instance *instance_;
   fcitx::InputContext *ic;
   zmq::context_t *ctx;
-  zmq::socket_t *pub;
+  zmq::socket_t *sock;
   Server *server;
   fcitx::EventDispatcher *dispatcher;
 };
@@ -59,7 +59,7 @@ public:
 
 private:
   zmq::context_t *ctx;
-  zmq::socket_t *rep;
+  zmq::socket_t *sock;
   Engine *engine;
   fcitx::EventDispatcher *dispatcher;
   void dispatch(CommandToFcitx *);

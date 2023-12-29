@@ -44,7 +44,7 @@ Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
   engine = this;
 
   ctx = new zmq::context_t();
-  sock = new zmq::socket_t(*ctx, ZMQ_PUB);
+  sock = new zmq::socket_t(*ctx, ZMQ_REQ);
   sock->bind("tcp://127.0.0.1:8085");
 
   fcitx::EventDispatcher *dispatcher = new fcitx::EventDispatcher();
@@ -92,7 +92,24 @@ void Engine::keyEvent(const fcitx::InputMethodEntry &entry,
   memcpy(keyMsg.data(), serialized.data(), serialized.size());
   sock->send(keyMsg, zmq::send_flags::dontwait);
 
-  keyEvent.filterAndAccept();
+  zmq::message_t reply;
+  zmq::recv_result_t maybeSize = sock->recv(reply);
+
+  if (!maybeSize.has_value()) {
+    return;
+    // The input method engine should reply with KeyEventReply, but if nothing
+    // is given, key event is not accepted.
+  }
+  auto size = maybeSize.value();
+  auto data = reply.data();
+  KeyEventReply keyEventReply;
+  if (!keyEventReply.ParseFromArray(data, size)) {
+    return;
+    // If not KeyEventReply sent back, key event is not accepted.
+  }
+  if (keyEventReply.accepted()) {
+    keyEvent.filterAndAccept();
+  }
 }
 
 void Engine::reset(const fcitx::InputMethodEntry &,

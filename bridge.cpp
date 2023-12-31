@@ -46,6 +46,9 @@ Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
   ctx = new zmq::context_t();
   sock = new zmq::socket_t(*ctx, ZMQ_REQ);
   sock->connect("tcp://127.0.0.1:8085");
+  sock->set(zmq::sockopt::rcvtimeo, 500);
+  sock->set(zmq::sockopt::sndtimeo, 50);
+  sock->set(zmq::sockopt::linger, 0);
 
   fcitx::EventDispatcher *dispatcher = new fcitx::EventDispatcher();
   this->dispatcher = dispatcher;
@@ -90,10 +93,19 @@ void Engine::keyEvent(const fcitx::InputMethodEntry &entry,
 
   zmq::message_t keyMsg(serialized.size());
   memcpy(keyMsg.data(), serialized.data(), serialized.size());
-  sock->send(keyMsg, zmq::send_flags::none);
+  try {
+    sock->send(keyMsg, zmq::send_flags::none);
+  } catch (...) {
+    return;
+  }
 
   zmq::message_t reply;
-  zmq::recv_result_t maybeSize = sock->recv(reply);
+  zmq::recv_result_t maybeSize;
+  try {
+    maybeSize = sock->recv(reply);
+  } catch (...) {
+    return;
+  }
 
   if (!maybeSize.has_value()) {
     return;
@@ -136,6 +148,9 @@ Server::Server() {
   ctx = new zmq::context_t();
   sock = new zmq::socket_t(*ctx, ZMQ_REP);
   sock->bind("tcp://127.0.0.1:8086");
+  sock->set(zmq::sockopt::rcvtimeo, 50);
+  sock->set(zmq::sockopt::sndtimeo, 50);
+  sock->set(zmq::sockopt::linger, 0);
 }
 
 Server::~Server() {

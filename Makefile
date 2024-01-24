@@ -22,9 +22,15 @@ install:
 	sudo cmake --install ./build
 
 uninstall-usr:
-	sudo rm /usr/lib/fcitx5/libbridge.so
-	sudo rm /usr/share/fcitx5/addon/bridge.conf
-	sudo rm /usr/share/fcitx5/inputmethod/bridge.conf
+	sudo rm -f /usr/lib/fcitx5/libbridge.so
+	sudo rm -f /usr/lib/fcitx5/libbridge-fcp.so
+	sudo rm -f /usr/lib/fcitx5/libbridge-fcn.so
+	sudo rm -f /usr/share/fcitx5/addon/bridge.conf
+	sudo rm -f /usr/share/fcitx5/addon/bridge-fcp.conf
+	sudo rm -f /usr/share/fcitx5/addon/bridge-fcn.conf
+	sudo rm -f /usr/share/fcitx5/inputmethod/bridge.conf
+	sudo rm -f /usr/share/fcitx5/inputmethod/bridge-fcp.conf
+	sudo rm -f /usr/share/fcitx5/inputmethod/bridge-fcn.conf
 
 proto:
 	protoc --cpp_out=. msgs.proto

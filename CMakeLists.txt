@@ -9,9 +9,9 @@ set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--copy-dt-needed-entries")
 set(CMAKE_STATIC_LINKER_FLAGS "-Wl,--copy-dt-needed-entries")
 
 # By default, all three bridges are built.
-option(BUILD_GENERIC "Build for Generic Mode" ON)
+option(BUILD_GENERIC "Build for Generic Mode" OFF)
 option(BUILD_FULL_CLOUD_PINYIN "Build for Full Cloud Pinyin" ON)
-option(BUILD_FULL_CLOUD_NEPALI "Build for Full Cloud Nepali" ON)
+option(BUILD_FULL_CLOUD_NEPALI "Build for Full Cloud Nepali" OFF)
 if(BUILD_GENERIC)
     add_compile_definitions(FULL_CLOUD_GENERIC)
 endif()

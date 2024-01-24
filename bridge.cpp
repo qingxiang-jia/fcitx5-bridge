@@ -45,7 +45,15 @@ Engine::Engine(fcitx::Instance *instance) : instance_(instance) {
 
   ctx = new zmq::context_t();
   sock = new zmq::socket_t(*ctx, ZMQ_REQ);
+#ifdef FULL_CLOUD_GENERIC
   sock->connect("tcp://127.0.0.1:8085");
+#endif
+#ifdef FULL_CLOUD_PINYIN
+  sock->connect("tcp://127.0.0.1:8087");
+#endif
+#ifdef FULL_CLOUD_NEPALI
+  sock->connect("tcp://127.0.0.1:8089");
+#endif
   sock->set(zmq::sockopt::rcvtimeo, 500);
   sock->set(zmq::sockopt::sndtimeo, 50);
   sock->set(zmq::sockopt::linger, 0);
@@ -147,7 +155,15 @@ std::unique_ptr<fcitx::CommonCandidateList> Engine::makeCandidateList() {
 Server::Server() {
   ctx = new zmq::context_t();
   sock = new zmq::socket_t(*ctx, ZMQ_REP);
+#ifdef FULL_CLOUD_GENERIC
   sock->bind("tcp://127.0.0.1:8086");
+#endif
+#ifdef FULL_CLOUD_PINYIN
+  sock->bind("tcp://127.0.0.1:8088");
+#endif
+#ifdef FULL_CLOUD_NEPALI
+  sock->bind("tcp://127.0.0.1:8090");
+#endif
   sock->set(zmq::sockopt::rcvtimeo, 50);
   sock->set(zmq::sockopt::sndtimeo, 50);
   sock->set(zmq::sockopt::linger, 0);

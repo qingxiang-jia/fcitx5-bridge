@@ -15,11 +15,19 @@ init-release-usr:
 	cd ./build; \
 	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Release ..
 
+init-release-local:
+	mkdir -p build
+	cd ./build; \
+	cmake -DCMAKE_INSTALL_PREFIX=./binary -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -DCMAKE_BUILD_TYPE=Release ..
+
 build:
 	cmake --build ./build
 
 install:
 	sudo cmake --install ./build
+
+install-local:
+	cmake --install ./build
 
 uninstall-usr:
 	sudo rm -f /usr/lib/fcitx5/libbridge.so

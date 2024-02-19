@@ -35,6 +35,7 @@ uninstall-usr:
 	sudo rm -f /usr/lib/fcitx5/libbridge-fcn.so
 	sudo rm -f /usr/share/fcitx5/addon/bridge.conf
 	sudo rm -f /usr/share/fcitx5/addon/bridge-fcp.conf
+	sudo rm -f /usr/share/icons/hicolor/scalable/apps/fcp.svg
 	sudo rm -f /usr/share/fcitx5/addon/bridge-fcn.conf
 	sudo rm -f /usr/share/fcitx5/inputmethod/bridge.conf
 	sudo rm -f /usr/share/fcitx5/inputmethod/bridge-fcp.conf

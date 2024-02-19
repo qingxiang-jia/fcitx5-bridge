@@ -58,9 +58,11 @@ if(BUILD_GENERIC)
 endif()
 if(BUILD_FULL_CLOUD_PINYIN)
     install(FILES "${PROJECT_SOURCE_DIR}/bridge-addon-fcp.conf" RENAME bridge-fcp.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
+    install(FILES "${PROJECT_SOURCE_DIR}/fcp.svg" DESTINATION share/icons/hicolor/scalable/apps)
 endif()
 if(BUILD_FULL_CLOUD_NEPALI)
     install(FILES "${PROJECT_SOURCE_DIR}/bridge-addon-fcn.conf" RENAME bridge-fcn.conf DESTINATION "${FCITX_INSTALL_PKGDATADIR}/addon")
+    install(FILES "${PROJECT_SOURCE_DIR}/fcp.svg" DESTINATION share/icons/hicolor/scalable/apps)
 endif()
 
 # Input Method registration file

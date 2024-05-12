@@ -239,8 +239,8 @@ void Server::serve() {
     zmq::recv_result_t maybeSize;
     try {
       maybeSize = sock->recv(*msg);
-    } catch (const zmq::error_t &e) {
-      exit(0);
+    } catch (...) {
+      continue;
     }
     if (!maybeSize.has_value()) {
       continue;
